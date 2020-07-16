@@ -1,13 +1,27 @@
-let page = document.getElementById('buttonTag');
-const recipeClassNames = ['wprm-recipe']
+// const recipeClassNames = ['wprm-recipe']
+recipeClassNames = false
 
-function runFunction() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.executeScript(tabs[0].id, {code: 'alert("Hello World!");'})
+
+function runWindowScroll(script) {
+    chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+        chrome.tabs.executeScript(tabs[0].id, {code: script})
     })
 }
+
+
 function findRecipeDiv() {
-    let button = page
-    button.addEventListener('click', runFunction)
+    let script = ""
+    if (!recipeClassNames) {
+        script = 'alert("Could not find recipe :(");'
+    } else {
+        script = 'alert("Recipe found!");'
+    }
+    runWindowScroll(script)
 }
-findRecipeDiv();
+
+
+function readyButtonListener() {
+    let button = document.getElementById('buttonTag')
+    button.addEventListener('click', findRecipeDiv)
+}
+readyButtonListener();
