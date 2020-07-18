@@ -1,10 +1,19 @@
+let recipes = document.getElementsByClassName('tasty-recipes')
+let recipe = recipes[0]
+
+
+function scrollToRecipeElement() {
+    recipe.scrollIntoView({
+        behavior: "smooth"
+    })
+}
+
+
 function handleMessage(request, sender, sendResponse) {
-    console.log(sender.tab ?
-        "from a content script" + sender.tab.url :
-        "from the extension")
     if (request.command == "run") {
-        sendResponse({farewell: "goodbye"})
+        sendResponse({farewell: "content script response"})
     }
+    scrollToRecipeElement()
 }
 
 
